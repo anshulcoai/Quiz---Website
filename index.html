@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .quiz-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      display: block;
+      margin: 0.5rem auto;
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    #score {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div id="quiz">
+    <div class="question" id="question">Question Text</div>
+    <button class="btn" id="a">Option A</button>
+    <button class="btn" id="b">Option B</button>
+    <button class="btn" id="c">Option C</button>
+    <button class="btn" id="d">Option D</button>
+    <div id="score"></div>
+  </div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "What is the capital of France?",
+      a: "Berlin",
+      b: "Madrid",
+      c: "Paris",
+      d: "Lisbon",
+      correct: "c"
+    },
+    {
+      question: "What does HTML stand for?",
+      a: "Hyper Text Markup Language",
+      b: "Home Tool Markup Language",
+      c: "Hyperlinks and Text Mark Language",
+      d: "None of the above",
+      correct: "a"
+    },
+    {
+      question: "Which language is used for styling web pages?",
+      a: "HTML",
+      b: "jQuery",
+      c: "CSS",
+      d: "XML",
+      correct: "c"
+    }
+  ];
+
+  const questionEl = document.getElementById("question");
+  const btnA = document.getElementById("a");
+  const btnB = document.getElementById("b");
+  const btnC = document.getElementById("c");
+  const btnD = document.getElementById("d");
+  const scoreEl = document.getElementById("score");
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuiz() {
+    const current = quizData[currentQuestion];
+    questionEl.textContent = current.question;
+    btnA.textContent = current.a;
+    btnB.textContent = current.b;
+    btnC.textContent = current.c;
+    btnD.textContent = current.d;
+  }
+
+  function handleAnswer(answer) {
+    const current = quizData[currentQuestion];
+    if (answer === current.correct) {
+      score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+      loadQuiz();
+    } else {
+      quiz.innerHTML = `
+        <h2>You scored ${score} out of ${quizData.length}</h2>
+        <button class="btn" onclick="location.reload()">Restart Quiz</button>
+      `;
+    }
+  }
+
+  btnA.onclick = () => handleAnswer("a");
+  btnB.onclick = () => handleAnswer("b");
+  btnC.onclick = () => handleAnswer("c");
+  btnD.onclick = () => handleAnswer("d");
+
+  loadQuiz();
+</script>
+
+</body>
+</html>
